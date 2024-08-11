@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiki & Runbook Pages</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        width: 80%;
+        margin: 0 auto;
+      }
+      h1 {
+        text-align: center;
+      }
+      .page-list {
+        list-style-type: none;
+        padding: 0;
+      }
+      .page-list li {
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .page-list a {
+        text-decoration: none;
+        color: #007bff;
+      }
+      .page-list a:hover {
+        text-decoration: underline;
+      }
+      .actions {
+        margin-top: 20px;
+        text-align: center;
+      }
+      .actions a {
+        text-decoration: none;
+        color: #007bff;
+        margin: 0 10px;
+      }
+      .actions a:hover {
+        text-decoration: underline;
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Wiki & Runbook Pages</h1>
+        <div class="actions">
+            <a href="{{ url_for('create_page') }}">Create New Page</a>
+        </div>
+        <ul class="page-list">
+            {% for page in pages %}
+            <li>
+                <a href="{{ url_for('view_page', page_id=page.id) }}">{{ page.title }}</a>
+                <form action="{{ url_for('view_page', page_id=page.id) }}" method="POST" style="display: inline;">
+                    <button type="submit" name="delete" style="background: none; border: none; color: red; cursor: pointer;">Delete</button>
+                    <button type="submit" name="edit" style="background: none; border: none; color: green; cursor: pointer;">Edit</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
