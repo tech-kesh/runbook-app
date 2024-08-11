@@ -11,6 +11,18 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
+def create_tables():
+    conn = get_db_connection()
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS pages (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            content TEXT NOT NULL
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
 @app.route('/')
 def index():
     conn = get_db_connection()
@@ -68,15 +80,7 @@ def edit_page(page_id):
     return render_template('edit_page.html', page=page)
 
 if __name__ == '__main__':
-    conn = get_db_connection()
-    conn.execute('''
-        CREATE TABLE IF NOT EXISTS pages (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT NOT NULL,
-            content TEXT NOT NULL
-        )
-    ''')
-    conn.close()
+    create_tables()  # Ensure tables are created
     app.run(debug=True)
 
     
