@@ -68,7 +68,6 @@ def edit_page(page_id):
     return render_template('edit_page.html', page=page)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
     conn = get_db_connection()
     conn.execute('''
         CREATE TABLE IF NOT EXISTS pages (
